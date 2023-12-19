@@ -28,10 +28,10 @@ Myślę że oczywiste jest że w takiej sytuacji najlepiej było by modyfikować
 Jednak na potrzeby tego zadania wykorzystałem plik csv. Klasa Subscriber jest Serializowana aby zachować ciągłość 
 oraz spójność danych, również po wyłączeniu aplikacji. 
 
+Dodałem jeszcze sms-controller 
+endpoint /reciveSMS służy do subskrybowania lub wypisania się w zależności od podania wartości w polu context.
+SMS doda numer do pliku Subscribers.csv, o ile już na liście nie jest oraz przestawi flagę isSubscriber na true.
+Jeśli jednak numer wyśle sms o treści STOP to flaga zostanie przestawiona na false.
 
 
-
-
-stwórz obiekt EvaluateRiskRequest i wypełnij go danymi
-stwórz http clienta i za jego pomocą wyślij żądanie na podany adres i wyślij wczesniej stworzony obiekt
-odpowiedz zapisz do obiekty EvaluateUriResponse i na jego podstawie zwróc użytkownikowi odpowiedź
+metoda GET /subscriber/{phoneNumber} sprawdza czy dany numer jest subscriberem.
