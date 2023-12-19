@@ -5,7 +5,9 @@ import java.util.List;
 public class EvaluateUriResponse {
     private List<Score> scores;
 
-    // Konstruktory, gettery i settery
+    public EvaluateUriResponse(List<Score> scores) {
+        this.scores = scores;
+    }
 
     public List<Score> getScores() {
         return scores;
