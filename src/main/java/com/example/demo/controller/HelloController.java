@@ -28,6 +28,7 @@ public class HelloController {
 
     @PostMapping("/SendSMS")
     public ResponseEntity<String> sendSMS(@RequestBody SMSData smsData) {
+
         try {
             String result = smsService.sendSms(smsData);
             return ResponseEntity.ok(result);

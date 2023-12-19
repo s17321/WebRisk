@@ -8,8 +8,6 @@ public class SMSData {
     private String recipient;
     private String message;
 
-    // Getters and setters
-    //Wyciągnij URL z wiadomości za pomocą odpowiedniego regex lub innego parsera, jeśli wiadomość ma stały format.
 
     public String getSender() {
         return sender;

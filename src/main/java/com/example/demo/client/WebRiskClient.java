@@ -1,5 +1,7 @@
 package com.example.demo.client;
 
+import com.example.demo.model.EvaluateRiskRequest;
+import com.example.demo.model.EvaluateUriResponse;
 import com.example.demo.model.WebRiskResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Component;
@@ -24,25 +26,49 @@ public class WebRiskClient {
         this.apiKey = apiKey;
     }
 
-    public WebRiskResponse evaluateUri(String uri) throws IOException {
+    public EvaluateUriResponse evaluateUri(EvaluateRiskRequest request) throws IOException {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        // Dodaj token autoryzacyjny, jeśli jest wymagany
-
-        String requestBody = "{"
-                + "\"uri\": \"" + uri + "\","
-                + "\"threatTypes\": [\"SOCIAL_ENGINEERING\", \"MALWARE\"],"
-                + "\"allowScan\": true"
-                + "}";
-
-        System.out.println(requestBody);
-
-        HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
-
-        String url = "https://webrisk.googleapis.com/v1eap1:evaluateUri?key=" + this.apiKey;
-        String jsonResponse = restTemplate.postForObject(url, request, String.class);
 
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(jsonResponse, WebRiskResponse.class);
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+        String url = "https://webrisk.googleapis.com/v1eap1:evaluateUri?key=" + this.apiKey;
+
+        String jsonResponse = restTemplate.postForObject(url, entity, String.class);
+        return objectMapper.readValue(jsonResponse, EvaluateUriResponse.class);
     }
 }
+
+//    public WebRiskResponse evaluateUri(EvaluateRiskRequest request) throws IOException {
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String requestBody = objectMapper.writeValueAsString(request);
+//
+//        HttpEntity<String> entity = new HttpEntity<>(requestBody, headers);
+//        String url = "https://webrisk.googleapis.com/v1eap1:evaluateUri?key=" + this.apiKey;
+//
+//        String jsonResponse = restTemplate.postForObject(url, entity, String.class);
+//        return objectMapper.readValue(jsonResponse, WebRiskResponse.class);
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//
+//        String requestBody = "{"
+//                + "\"uri\": \"" + uri + "\","
+//                + "\"threatTypes\": [\"SOCIAL_ENGINEERING\", \"MALWARE\"],"
+//                + "\"allowScan\": true"
+//                + "}";
+//
+//        System.out.println(requestBody);
+//
+//        HttpEntity<String> request = new HttpEntity<>(requestBody, headers);
+//
+//        String url = "https://webrisk.googleapis.com/v1eap1:evaluateUri?key=" + this.apiKey;
+//        String jsonResponse = restTemplate.postForObject(url, request, String.class);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        return objectMapper.readValue(jsonResponse, WebRiskResponse.class);
+

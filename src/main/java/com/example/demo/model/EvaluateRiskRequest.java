@@ -4,37 +4,33 @@ import java.util.List;
 
 public class EvaluateRiskRequest {
     private String uri;
-    private List<com.google.webrisk.v1.ThreatType> threatTypes;
+    private List<String> threatTypes;
     private boolean allowScan;
 
     public String getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
-
-    public List<com.google.webrisk.v1.ThreatType> getThreatTypes() {
+    public List<String> getThreatTypes() {
         return threatTypes;
-    }
-
-    public void setThreatTypes(List<com.google.webrisk.v1.ThreatType> threatTypes) {
-        this.threatTypes = threatTypes;
     }
 
     public boolean isAllowScan() {
         return allowScan;
     }
 
-    public void setAllowScan(boolean allowScan) {
+    public EvaluateRiskRequest(String uri, List<String> threatTypes, boolean allowScan) {
+        this.uri = uri;
+        this.threatTypes = threatTypes;
         this.allowScan = allowScan;
-    }
-}
 
-enum ThreatType {
-    THREAT_TYPE_UNSPECIFIED,
-    SOCIAL_ENGINEERING,
-    MALWARE,
-    UNWANTED_SOFTWARE
+    }
+    @Override
+    public String toString() {
+        return "EvaluateRiskRequest{" +
+                "uri='" + uri + '\'' +
+                ", threatTypes=" + threatTypes +
+                ", allowScan=" + allowScan +
+                '}';
+    }
 }
